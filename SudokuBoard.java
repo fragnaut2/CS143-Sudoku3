@@ -183,10 +183,11 @@ public class SudokuBoard {
         } else if(isSolved()){
             return true;
         } else {
-            for (int i = 1; i < 10; i ++){
-                for(int r = 0; r < board.length; r++){
-                    for(int c = 0; c < board[r].length; c++){
-                        if(board[r][c].equals(".")){
+            
+            for(int r = 0; r < board.length; r++){
+                for(int c = 0; c < board[r].length; c++){
+                    if(board[r][c].equals(".")){
+                        for (int i = 1; i < 10; i ++){
                             board[r][c] = String.valueOf(i);
                             if(solve()){
                                 return true;
@@ -196,6 +197,7 @@ public class SudokuBoard {
                     }
                 }
             }
+            
         }
         return false;
     }
