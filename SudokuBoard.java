@@ -8,6 +8,8 @@ public class SudokuBoard {
 
 
     //constructor
+    // This method initializes the board array and populates with data from
+    // .sdk board files.
     public SudokuBoard(String FileName) {
         board = new String[9][9];
 
@@ -35,6 +37,7 @@ public class SudokuBoard {
 
 
     //helper for toString
+    // this prints the board in a more aesthetic way.
     public String printBoard() {
         String sBoard = "+-----------------------+\n";
         for (int r = 0; r < board.length; r++) {
@@ -53,6 +56,7 @@ public class SudokuBoard {
         return sBoard;
     }
 
+    // this method runs all of the sub-methods to ensure that the board is in a valid state.
     public boolean isValid() {
         return isValidInput() && hasRowDuplicates() && hasColDuplicates() &&
             hasSquareDuplicates();
@@ -72,7 +76,7 @@ public class SudokuBoard {
         }
         return true;
     }
-
+    // Check each row for duplicate numbers with a set.
     private boolean hasRowDuplicates() {
         for (int c = 0; c < board.length; c++) {
             Set < String > set = new HashSet < > ();
@@ -94,6 +98,7 @@ public class SudokuBoard {
         return true;
     }
 
+    // Checks each column for duplicate numbers with a set.
     private boolean hasColDuplicates() {
         for (String[] row: board) {
             Set < String > set = new HashSet < > ();
@@ -115,6 +120,7 @@ public class SudokuBoard {
         return true;
     }
 
+    // Checks each mini square for duplicate numbers with a set.
     private boolean hasSquareDuplicates() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -142,6 +148,8 @@ public class SudokuBoard {
         return true;
     }
 
+    // Checks if the board is solved by creating with the number of occurances of each entry
+    // and checks that they are all equal to 9.
     public boolean isSolved() {
         if (!isValid()) {
             return false;
@@ -174,6 +182,20 @@ public class SudokuBoard {
             return false;
         } else if(isSolved()){
             return true;
+        } else {
+            for (int i = 1; i < 10; i ++){
+                for(int r = 0; r < board.length; r++){
+                    for(int c = 0; c < board[r].length; c++){
+                        if(board[r][c].equals(".")){
+                            board[r][c] = String.valueOf(i);
+                            if(solve()){
+                                return true;
+                            }
+                            board[r][c] = ".";
+                        }
+                    }
+                }
+            }
         }
         return false;
     }
