@@ -5,6 +5,7 @@ import java.io.*;
 public class SudokuBoard {
     //fields
     protected String[][] board;
+    private BoardGUI gui;
 
 
     //constructor
@@ -12,6 +13,7 @@ public class SudokuBoard {
     // .sdk board files.
     public SudokuBoard(String FileName) {
         board = new String[9][9];
+        gui = new BoardGUI(9);
 
         try {
             Scanner input = new Scanner(new File(FileName));
@@ -189,11 +191,14 @@ public class SudokuBoard {
                     if(board[r][c].equals(".")){
                         for (int i = 1; i < 10; i ++){
                             board[r][c] = String.valueOf(i);
+                            
                             if(solve()){
                                 return true;
                             }
+                            gui.update(board);
                             board[r][c] = ".";
                         }
+                        return false;
                     }
                 }
             }
